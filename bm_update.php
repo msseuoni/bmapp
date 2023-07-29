@@ -1,4 +1,5 @@
 <?php
+session_start();
 //1. POSTデータ取得
 $name   = $_POST["name"];
 $Author  = $_POST["Author"];
@@ -7,6 +8,7 @@ $No    = $_POST["No"];   //Noを取得
 
 //2. DB接続します
 include("funcs.php");  //funcs.phpを読み込む（関数群）
+sschk();
 $pdo = db_conn();      //DB接続関数
 
 

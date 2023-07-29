@@ -1,12 +1,10 @@
 <?php
-//1.  DB接続します
-// try {
-//   // $pdo = new PDO('mysql:dbname=msseuoni_mss_db;charset=utf8;host=mysql57.msseuoni.sakura.ne.jp','msseuoni','msseuoni-5050');
-//   $pdo = new PDO('mysql:dbname=mss_db;charset=utf8;host=localhost','root','');
-// } catch (PDOException $e) {
-//   exit('DB Connection Error'.$e->getMessage());
-// }
-include("funcs.php");  //funcs.phpを読み込む（関数群）
+session_start();
+
+include("funcs.php");
+
+sschk();
+
 $pdo = db_conn();      //DB接続関数
 
 //２．データ登録SQL作成
@@ -14,7 +12,6 @@ $pdo = db_conn();      //DB接続関数
 // $stmt = $pdo->prepare($sql);
 $stmt   = $pdo->prepare("SELECT * FROM gs_bm_table"); //SQLをセット
 $status = $stmt->execute(); //SQLを実行→エラーの場合falseを$statusに代入
-$status = $stmt->execute();
 
 //３．データ表示
 // $view="";
@@ -40,12 +37,12 @@ if($status==false) {
 }else{
   //SQL成功の場合
   while( $r = $stmt->fetch(PDO::FETCH_ASSOC)){ //データ取得数分繰り返す
-    //以下でリンクの文字列を作成, $r["id"]でidをdetail.phpに渡しています
+    $view .= '<p>';
     $view .= '<a href="bm_update_view.php?No='.h($r["No"]).'">';
     $view .= h($r["No"])."|".h($r["name"])."|".h($r["Author"])."|".h($r["Comment"]);
     $view .= '</a>';
-    $view .= '<a href="delete.php?No='.h($r["No"]).'">';
-    $view .= '[削除]';
+    $view .= '<a class="btn btn-danger" href="delete.php?No='.h($r["No"]).'">';
+    $view .= '[<i class="glyphicon glyphicon-remove"></i>削除]';
     $view .= '</a>';
     $view .= '<br>';
   }
@@ -60,7 +57,7 @@ if($status==false) {
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ブックマーク登録アプリ</title>
+<title>ブックマーク一覧</title>
 <link rel="stylesheet" href="css/range.css">
 <link href="css/bootstrap.min.css" rel="stylesheet">
 <style>div{padding: 10px;font-size:16px;}</style>
@@ -70,9 +67,10 @@ if($status==false) {
 <header>
   <nav class="navbar navbar-default">
     <div class="container-fluid">
-      <div class="navbar-header">
-      <a class="navbar-brand" href="index.php">ブックマーク済み一覧</a>
-      </div>
+    <div class="navbar-header"><a class="navbar-brand" href="index.php">新規ブックマーク登録</a></div>
+    <div class="navbar-header"><a class="navbar-brand" href="user_list_view.php">ユーザ一覧</a></div>
+    <div class="navbar-header"><a class="navbar-brand" href="login.php">ログイン</a></div>
+    <div class="navbar-header"><a class="navbar-brand" href="logout.php">ログアウト</a></div>
     </div>
   </nav>
 </header>
@@ -80,6 +78,7 @@ if($status==false) {
 
 <!-- Main[Start] -->
 <div>
+    <h3>ブックマーク一覧</h3>
     <div class="container jumbotron"><?=$view?></div>
 </div>
 <!-- Main[End] -->

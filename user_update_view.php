@@ -1,16 +1,14 @@
 <?php
 session_start();
-//１．PHP
-//select.phpの[PHPコードだけ！]をマルっとコピーしてきます。
-//※SQLとデータ取得の箇所を修正します。
-$No = $_GET["No"];
+
+$id = $_GET["id"];
 
 include("funcs.php");  //funcs.phpを読み込む（関数群）
 sschk();
 $pdo = db_conn();      //DB接続関数
 
-$stmt   = $pdo->prepare("SELECT * FROM gs_bm_table WHERE No=:No"); //SQLをセット
-$stmt->bindValue(':No', $No, PDO::PARAM_INT); 
+$stmt   = $pdo->prepare("SELECT * FROM gs_user_table WHERE id=:id"); //SQLをセット
+$stmt->bindValue(':id', $id, PDO::PARAM_INT); 
 $status = $stmt->execute(); //SQLを実行→エラーの場合falseを$statusに代入
 
 if($status==false) {
@@ -36,22 +34,22 @@ if($status==false) {
 <header>
   <nav class="navbar navbar-default">
     <div class="container-fluid">
-    <div class="navbar-header"><a class="navbar-brand" href="bm_list_view.php">ブックマーク一覧</a></div>
+    <div class="navbar-header"><a class="navbar-brand" href="user_list_view.php">ユーザ一覧</a></div>
     </div>
   </nav>
 </header>
 <!-- Head[End] -->
 
 <!-- Main[Start] -->
-<form method="POST" action="bm_update.php">
+<form method="POST" action="user_update.php">
   <div class="jumbotron">
    <fieldset>
-    <legend>好きな本を登録しよう！</legend>
-     <label>書籍名：<input type="text" name="name" value="<?=$row["name"]?>"></label><br>
-     <label>作者：<input type="text" name="Author" value="<?=$row["Author"]?>"></label><br>
-     <label><input type="text" name="Comment" value="<?=$row["Comment"]?>"></label><br>
+   <legend>ユーザ情報変更</legend>
+     <label>名前：<input type="text" name="name" value="<?=$row["name"]?>"></label><br>
+     <label>ID：<input type="text" name="lid" value="<?=$row["lid"]?>"></label><br>
+     <label>Pass：<input type="text" name="lpw" value="<?=$row["lpw"]?>"></label><br>
      <!-- idを隠して送信 -->
-     <input type="hidden" name="No" value="<?=$No?>">
+     <input type="hidden" name="id" value="<?=$id?>">
      <!-- idを隠して送信 -->
      <input type="submit" value="送信">
     </fieldset>
