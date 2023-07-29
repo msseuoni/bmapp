@@ -1,17 +1,22 @@
 <?php
+session_start();
+// ログインしているかをチェック
+if (!isset($_SESSION["kanri_flg"])) {
+  // セッションに"kanri_flg"がセットされていない場合はログインエラー
+  echo "Login Error";
+  exit; // 処理を中断して終了
+}
+
 //1. POSTデータ取得
-//$name = filter_input( INPUT_GET, ","name" ); //こういうのもあるよ
-//$email = filter_input( INPUT_POST, "email" ); //こういうのもあるよ
 $name = $_POST['name'];
 $Author = $_POST['Author'];
 $Comment = $_POST['Comment'];
 
-
 //2. DB接続します
 try {
   //Password:MAMP='root',XAMPP=''
-  // $pdo = new PDO('mysql:dbname=msseuoni_mss_db;charset=utf8;host=mysql57.msseuoni.sakura.ne.jp','msseuoni','msseuoni-5050');
-  $pdo = new PDO('mysql:dbname=mss_db;charset=utf8;host=localhost','root','');
+  $pdo = new PDO('mysql:dbname=msseuoni_mss_db;charset=utf8;host=mysql57.msseuoni.sakura.ne.jp','msseuoni','msseuoni-5050');
+  // $pdo = new PDO('mysql:dbname=mss_db;charset=utf8;host=localhost','root','');
 } catch (PDOException $e) {
   exit('DB Connection Error:'.$e->getMessage());
 }

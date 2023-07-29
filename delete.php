@@ -1,14 +1,21 @@
 <?php
 session_start();
 
+// ログインしているかをチェック
+if (!isset($_SESSION["kanri_flg"])) {
+    // セッションに"kanri_flg"がセットされていない場合はログインエラー
+    echo "Login Error";
+    exit; // 処理を中断して終了
+}
+
+// 管理フラグが1でない場合は削除失敗のメッセージを表示
+if ($_SESSION["kanri_flg"] != 1) {
+    echo "削除する権限がありません。";
+    exit; // 処理を中断して終了
+}
+
 //1. POSTデータ取得
 $No   = $_GET["No"];
-
-if (!isset($_SESSION["chk_ssid"]) || !isset($_SESSION["kanri_flg"]) || $_SESSION["kanri_flg"] !== 1) {
-    // ログインしていないか、管理者権限を持っていない場合は削除を許可しない
-    // ログインページにリダイレクト
-    exit("あなたに削除権限はありません。戻るボタンを押して戻ってください");
-  }
 
 //2. DB接続します
 include("funcs.php");  //funcs.phpを読み込む（関数群）

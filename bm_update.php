@@ -1,5 +1,11 @@
 <?php
 session_start();
+
+if ($_SESSION["kanri_flg"] != 1) {
+    echo "変更する権限がありません。";
+    exit; // 処理を中断して終了
+}
+
 //1. POSTデータ取得
 $name   = $_POST["name"];
 $Author  = $_POST["Author"];

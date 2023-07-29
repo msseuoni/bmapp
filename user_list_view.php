@@ -1,15 +1,26 @@
 <?php
 session_start();
 
+if (!isset($_SESSION["kanri_flg"])) {
+  // セッションに"kanri_flg"がセットされていない場合はログインエラー
+  echo "Login Error";
+  exit; // 処理を中断して終了
+}
+
+// 管理フラグが1でない場合は削除失敗のメッセージを表示
+if ($_SESSION["kanri_flg"] != 1) {
+  echo "閲覧する権限がありません。戻るボタンを押して戻って下さい";
+  exit; // 処理を中断して終了
+}
+
 include("funcs.php");
 
 sschk();
 
-if (!isset($_SESSION["chk_ssid"]) || !isset($_SESSION["kanri_flg"]) || $_SESSION["kanri_flg"] !== 1) {
-    // ログインしていないか、管理者権限を持っていない場合は閲覧を許可しない
-    // ログインページにリダイレクト
-    exit("あなたに閲覧権限はありません。戻るボタンを押して戻ってください");
-  }
+// if (!isset($_SESSION["chk_ssid"]) || !isset($_SESSION["kanri_flg"]) || $_SESSION["kanri_flg"] !== 1) {
+//     // ログインしていないか、管理者権限を持っていない場合は閲覧を許可しない
+//     exit("あなたに閲覧権限はありません。戻るボタンを押して戻ってください");
+//   }
 
 $pdo = db_conn();      //DB接続関数
 

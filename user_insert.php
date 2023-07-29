@@ -9,8 +9,8 @@ $lpw = $_POST['lpw'];
 //2. DB接続します
 try {
   //Password:MAMP='root',XAMPP=''
-  // $pdo = new PDO('mysql:dbname=msseuoni_mss_db;charset=utf8;host=mysql57.msseuoni.sakura.ne.jp','msseuoni','msseuoni-5050');
-  $pdo = new PDO('mysql:dbname=mss_db;charset=utf8;host=localhost','root','');
+  $pdo = new PDO('mysql:dbname=msseuoni_mss_db;charset=utf8;host=mysql57.msseuoni.sakura.ne.jp','msseuoni','msseuoni-5050');
+  // $pdo = new PDO('mysql:dbname=mss_db;charset=utf8;host=localhost','root','');
 } catch (PDOException $e) {
   exit('DB Connection Error:'.$e->getMessage());
 }

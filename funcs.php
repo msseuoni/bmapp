@@ -10,13 +10,13 @@ function h($str)
 //DB接続関数：db_conn()
 function db_conn(){
     try {
-        //localhostの場合
-        $db_name = "mss_db";    //データベース名
-        $db_id   = "root";      //アカウント名
-        $db_pw   = "";          //パスワード：XAMPPはパスワード無しに修正してください。
-        $db_host = "localhost"; //DBホスト
+        // //localhostの場合
+        // $db_name = "mss_db";    //データベース名
+        // $db_id   = "root";      //アカウント名
+        // $db_pw   = "";          //パスワード：XAMPPはパスワード無しに修正してください。
+        // $db_host = "localhost"; //DBホスト
 
-        //localhost以外＊＊自分で書き直してください！！＊＊
+        //localhost以外
         if($_SERVER["HTTP_HOST"] != 'localhost'){
             $db_name = "msseuoni_mss_db";  //データベース名
             $db_id   = "msseuoni";  //アカウント名（さくらコントロールパネルに表示されています）
